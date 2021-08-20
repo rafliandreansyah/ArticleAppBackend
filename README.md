@@ -53,7 +53,7 @@ url: http://localhost:3000/:articleId \
 method: ```GET``` \
 header Authorization: Bearer ```(token yang kamu dapat pada login)```
 
-### 2.menambah article (login menggunakan writer)
+### 3.menambah article (login menggunakan writer)
 url: http://localhost:3000/add-article \
 method: ```POST``` \
 header Authorization: Bearer ```(token dari writer yang kamu dapat pada login)```
@@ -62,7 +62,7 @@ paramater yang dimasukan:
 - content ```string``` (required)
 - image  ```file``` (opsional)
 
-### 3.edit article (login menggunakan writer)
+### 4.edit article (login menggunakan writer)
 url: http://localhost:3000/edit-article/:articleId \
 method: ```PUT``` \
 header Authorization: Bearer ```(token dari writer yang kamu dapat pada login)```
@@ -72,12 +72,12 @@ paramater yang dimasukan:
 - imageUrl ```string``` (required)
 - image  ```file``` (opsional) -> jika melakukan edit gambar
 
-### 4.hapus article (login menggunakan writer)
+### 5.hapus article (login menggunakan writer)
 url: http://localhost:3000/delete-article/:articleId \
 method: ```DELETE``` \
 header Authorization: Bearer ```(token dari writer yang kamu dapat pada login)```
 
-### 5.comment article (login menggunakan pembaca)
+### 6.comment article (login menggunakan pembaca)
 url: http://localhost:3000/:articleId/comment \
 method: ```POST``` \
 header Authorization: Bearer ```(token dari pembaca yang kamu dapat pada login)```
