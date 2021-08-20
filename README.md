@@ -1,4 +1,4 @@
-# ArticleAppBackend
+# Article App NODEJS API
 
 Untuk memulai program jangan lupa untuk menginstall node_modules dengan melakukan
 ```npm install``` pada terminal yang mengarah pada root folder
