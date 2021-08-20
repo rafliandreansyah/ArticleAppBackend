@@ -1,25 +1,26 @@
 const { DataTypes } = require('sequelize')
-
 const sequelize = require('../helpers/database')
 
-const Article = sequelize.define('article', {
+const Writer = sequelize.define('writer', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true
     },
-    title: {
+    email: {
         type: DataTypes.STRING,
-        allowNull: false,
+        unique: true,
+        allowNull: false
     },
-    content: {
+    password: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    imageUrl: {
-        type: DataTypes.STRING
-    }
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
 })
 
-module.exports = Article
+module.exports = Writer

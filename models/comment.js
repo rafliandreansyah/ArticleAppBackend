@@ -2,24 +2,17 @@ const { DataTypes } = require('sequelize')
 
 const sequelize = require('../helpers/database')
 
-const Article = sequelize.define('article', {
+const Comment = sequelize.define('comment', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true
     },
-    title: {
+    comment: {
         type: DataTypes.STRING,
         allowNull: false,
-    },
-    content: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    imageUrl: {
-        type: DataTypes.STRING
     }
 })
 
-module.exports = Article
+module.exports = Comment

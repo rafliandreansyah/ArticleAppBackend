@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
-
+const jwt = require('jsonwebtoken')
 const User = require('../models/user')
+const Writer = require('../models/writer')
 
 exports.signUp = (req, res, next) => {
     const email = req.body.email
@@ -9,7 +10,12 @@ exports.signUp = (req, res, next) => {
     const name = req.body.name
     const address = req.body.address
     const gender = req.body.gender
-    const imageUrl = req.body.imageUrl
+    const image = req.file
+
+    let imageUrl
+    if(image){
+        imageUrl = image.path
+    }
 
     User.findOne({ where: { email: email } })
         .then(userEmail => {
@@ -33,14 +39,10 @@ exports.signUp = (req, res, next) => {
         .then(passwordHash => {
             return User.create({ email: email, username: username, name: name, address: address, gender: gender, imageUrl: imageUrl, password: passwordHash})
         })
-        .then(result => {
-            res.status(201).json({
+        .then(userResult => {
+            res.status(200).json({
                 message: 'Sign up success',
-                user: {
-                    email: result.email,
-                    username: result.username,
-                    name: result.name
-                }
+                id: userResult.id
             })
         })
         .catch(err => {
@@ -55,6 +57,8 @@ exports.login = (req, res, next) => {
     const email = req.body.email
     const password = req.body.password
 
+    let userData
+
     User.findOne({ where: { email: email } })
         .then(user => {
             if (!user) {
@@ -62,6 +66,7 @@ exports.login = (req, res, next) => {
                     message: 'email or password is not correct'
                 })
             }
+            userData = user
             return bcrypt.compare(password, user.password)
         })
         .then(isEqual => {
@@ -70,7 +75,17 @@ exports.login = (req, res, next) => {
                     message: 'email or password is not correct'
                 })
             }
-            res.status(200).json({message: 'You are logged in'})
+            return jwt.sign({
+                email: userData.email,
+                userId: userData.id,
+                username: userData.username
+            }, 'mykeyjwtforapparticle', {expiresIn: '2h'})
+        })
+        .then(token => {
+            res.status(200).json({
+                token: token,
+                userId: userData.id
+            })
         })
         .catch(err => {
             res.status(500).json({
@@ -78,4 +93,44 @@ exports.login = (req, res, next) => {
                 err: err
             })
         })
+}
+
+
+exports.writerLogin = (req, res, next) => {
+    const email = req.body.email
+    const password = req.body.password
+
+    let writerData
+
+    Writer.findOne({ where: { email: email } })
+        .then(writer => {
+            if (!writer) {
+                return res.status(401).json({
+                    message: 'email or password is not correct'
+                })
+            }
+
+            if (password !== writer.password) {
+                return res.status(401).json({
+                    message: 'email or password is not correct'
+                })
+            }
+            writerData = writer
+            return jwt.sign({
+                email: writer.email,
+                writerId: writer.id
+            }, 'keyforwriter', {expiresIn: '2h'})
+        })
+        .then(token => {
+            res.status(200).json({
+                token: token,
+                writerId: writerData.id
+            })
+        })
+        .catch(err => [
+            res.status(500).json({
+                message: 'Login failed',
+                err: err
+            })
+        ])
 }
