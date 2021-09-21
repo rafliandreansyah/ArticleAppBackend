@@ -3,6 +3,14 @@
 Untuk memulai program jangan lupa untuk menginstall node_modules dengan melakukan
 ```npm install``` pada terminal yang mengarah pada root folder
 
+## Dependecy/Library
+
+* Framework [Express JS](https://expressjs.com/)
+* Menggunakan ORM [SEQUELIZE](https://sequelize.org/)
+* Database [MySQL](https://www.mysql.com/)
+* Authentikasi [JsonWebToken](https://jwt.io/)
+* Untuk encrypt password [BcryptJS](https://github.com/dcodeIO/bcrypt.js)
+
 ## End point API Authentikasi
 ### 1.sign up 
 url: http://localhost:3000/sign-up \
